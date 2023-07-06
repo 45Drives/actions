@@ -1,0 +1,10 @@
+name: 'dd Get Manifest'
+description: 'Get content of a 45Drives Build Manifest File'
+author: 'dawsondellavalle'
+inputs:
+  path:
+    description: 'Path to the manifest file'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

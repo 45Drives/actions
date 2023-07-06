@@ -1,0 +1,93 @@
+name: 'dd Ansible Playbook'
+description: 'Run an ansible playbook in GitHub Actions'
+author: 'dawsondellavalle'
+inputs:
+  ansible_bin:
+    description: 'Path to the Ansible binary'
+    required: true
+    default: 'ansible-playbook'
+  playbook:
+    description: 'Path to the playbook file'
+    required: true
+  directory:
+    description: 'Working directory for the playbook'
+    required: false
+  user:
+    description: 'User to run the playbook as'
+    required: false
+  unbuffered_output:
+    description: 'Enable unbuffered output'
+    required: false
+    default: false
+  limit:
+    description: 'Limit playbook execution to specific hosts or groups'
+    required: false
+  start_task:
+    description: 'Name of the task to start the playbook execution from'
+    required: false
+  skip_tags:
+    description: 'Skip tasks with specified tags'
+    required: false
+  tags:
+    description: 'Only run tasks with specified tags'
+    required: false
+  private_key:
+    description: 'SSH private key for authentication'
+    required: false
+  private_key_file:
+    description: 'Path to the SSH private key file'
+    required: false
+  inventory:
+    description: 'Inventory hosts or path to inventory file'
+    required: false
+  inventory_file:
+    description: 'Path to the inventory file'
+    required: false
+  vault_password:
+    description: 'Vault password for decrypting encrypted variables'
+    required: false
+  vault_password_file:
+    description: 'Path to the vault password file'
+    required: false
+  known_hosts:
+    description: 'SSH known hosts entries'
+    required: false
+  known_hosts_file:
+    description: 'Path to the known hosts file'
+    required: false
+  group_vars_directory:
+    description: 'Path to the group vars directory'
+    required: false
+  become:
+    description: 'Enable privilege escalation'
+    required: false
+    default: false
+  become_user:
+    description: 'User to escalate privileges to'
+    required: false
+  become_password:
+    description: 'Password for privilege escalation'
+    required: false
+  become_password_file:
+    description: 'Path to the become password file'
+    required: false
+  connection_password:
+    description: 'Password for connecting to hosts'
+    required: false
+  connection_password_file:
+    description: 'Path to the connection password file'
+    required: false
+  forks:
+    description: 'Number of parallel processes to use'
+    required: false
+  host_key_checking:
+    description: 'Enable SSH host key checking'
+    required: false
+    default: false
+  no_color:
+    description: 'Disable colored output'
+    required: false
+    default: false
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

@@ -1,0 +1,40 @@
+name: 'dd Prebuild Package Flow'
+description: 'Run the prebuild steps'
+inputs:
+  directory:
+    description: 'The base directory of the project'
+    required: true
+outputs:
+  manifest:
+    description: "Manifest json content"
+    value: ${{ steps.manifest.outputs.json }}
+  matrix:
+    description: "Matrix json content"
+    value: ${{ steps.manifest.outputs.matrix }}
+  uuid:
+    description: "UUID of Job"
+    value: ${{ steps.manifest.outputs.uuid }}
+runs:
+  using: "composite"
+  steps:
+    - id: manifest
+      name: Get manifest json
+      uses: dawsondellavalle/actions-test/get-manifest@main
+      with:
+        path: ${{ inputs.directory }}/manifest.json
+
+    - name: generate-ansible-vars
+      run: /root/git/auto-packaging/new-scripts/generate-ansible-vars ${{ inputs.directory }} ${{ steps.manifest.outputs.uuid }}
+      shell: bash
+
+    - name: Run prebuild playbook
+      uses: dawsondellavalle/actions-test/ansible-playbook@main
+      with:
+        playbook: /root/git/auto-packaging/actions/ansible/prebuild.yml
+        directory: ${{ inputs.directory }}/packaging
+        group_vars_directory: ${{ inputs.directory }}/packaging/group_vars
+        inventory: |
+          [ci]
+          localhost
+        become: true
+        host_key_checking: true

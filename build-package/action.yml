@@ -1,0 +1,16 @@
+name: 'dd Build Package'
+description: 'Build a linux package'
+author: 'dawsondellavalle'
+inputs:
+  manifest:
+    description: 'Manifest json content'
+    required: true
+  build:
+    description: 'Build json content'
+    required: true
+  uuid:
+    description: 'The uuid of the input and output files'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
