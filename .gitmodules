@@ -1,0 +1,4 @@
+[submodule "github-release"]
+	path = github-release
+	url = https://github.com/softprops/action-gh-release.git
+	branch = v1
