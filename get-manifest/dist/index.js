@@ -51,6 +51,9 @@ function run() {
             const manifestPath = core.getInput('path');
             const content = fs_1.default.readFileSync(manifestPath);
             const json = JSON.parse(content.toString());
+            if (json.schema_version !== '45D_AP_V2.0') {
+                throw new Error('This flow can only be used with V2 manifests.');
+            }
             core.setOutput('json', json);
             core.setOutput('matrix', { include: json.builds });
             core.setOutput('uuid', (0, uuid_1.v4)());

@@ -12,6 +12,10 @@ async function run(): Promise<void> {
 
 		const json = JSON.parse(content.toString());
 
+		if (json.schema_version !== '45D_AP_V2.0') {
+			throw new Error('This flow can only be used with V2 manifests.');
+		}
+
 		core.setOutput('json', json);
 		core.setOutput('matrix', { include: json.builds });
 		core.setOutput('uuid', uuidV4());
