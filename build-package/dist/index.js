@@ -45,6 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const exec = __importStar(__nccwpck_require__(514));
 const fs_1 = __importDefault(__nccwpck_require__(147));
+const path_1 = __importDefault(__nccwpck_require__(17));
 // import { tmpFile } from './tmp';
 // import path from 'path';
 // const parseInputFiles = (files: string): string[] => {
@@ -95,30 +96,7 @@ function run() {
                     throw new Error(`rocky build failed!`);
                 }
             }
-            // core.info(buildJson);
-            // core.info(manifest);
-            // const cmd: string[] = [];
-            // const env: { [key: string]: string } = {};
-            // const exitCode = await exec.exec(ansibleBin || 'ansible-playbook', cmd, {
-            // 	cwd: directory,
-            // 	env,
-            // 	listeners: {
-            // 		// stdout: stdout => {
-            // 		// 	// core.info(stdout.toString());
-            // 		// 	// console.log(stdout);
-            // 		// 	// output.push(stdout);
-            // 		// },
-            // 		// stderr: stderr => {
-            // 		// 	// core.error(stderr.toString());
-            // 		// 	// console.error(stderr);
-            // 		// 	// output.push(stderr);
-            // 		// },
-            // 	},
-            // });
-            // if (exitCode !== 0) {
-            // 	throw new Error(`${ansibleBin || 'ansible-playbook'} run failed!`);
-            // }
-            // core.setOutput('manifest')
+            fs_1.default.writeFileSync(path_1.default.join('/mnt/tank/ci_data', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
         }
         catch (error) {
             if (error instanceof Error)

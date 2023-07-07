@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 
 import fs from 'fs';
+import path from 'path';
 
 // import { tmpFile } from './tmp';
 // import path from 'path';
@@ -72,33 +73,7 @@ async function run(): Promise<void> {
 			}
 		}
 
-		// core.info(buildJson);
-		// core.info(manifest);
-
-		// const cmd: string[] = [];
-		// const env: { [key: string]: string } = {};
-
-		// const exitCode = await exec.exec(ansibleBin || 'ansible-playbook', cmd, {
-		// 	cwd: directory,
-		// 	env,
-		// 	listeners: {
-		// 		// stdout: stdout => {
-		// 		// 	// core.info(stdout.toString());
-		// 		// 	// console.log(stdout);
-		// 		// 	// output.push(stdout);
-		// 		// },
-		// 		// stderr: stderr => {
-		// 		// 	// core.error(stderr.toString());
-		// 		// 	// console.error(stderr);
-		// 		// 	// output.push(stderr);
-		// 		// },
-		// 	},
-		// });
-
-		// if (exitCode !== 0) {
-		// 	throw new Error(`${ansibleBin || 'ansible-playbook'} run failed!`);
-		// }
-		// core.setOutput('manifest')
+		fs.writeFileSync(path.join('/mnt/tank/ci_data', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
 	} catch (error) {
 		if (error instanceof Error) core.setFailed(error.message);
 	} finally {
