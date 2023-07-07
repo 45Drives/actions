@@ -19,7 +19,7 @@ runs:
   steps:
     - id: manifest
       name: Get manifest json
-      uses: dawsondellavalle/actions-test/get-manifest@main
+      uses: 45drives/actions/get-manifest@main
       with:
         path: ${{ inputs.directory }}/manifest.json
 
@@ -28,7 +28,7 @@ runs:
       shell: bash
 
     - name: Run prebuild playbook
-      uses: dawsondellavalle/actions-test/ansible-playbook@main
+      uses: 45drives/actions/ansible-playbook@main
       with:
         playbook: /root/git/auto-packaging/actions/ansible/prebuild.yml
         directory: ${{ inputs.directory }}/packaging
