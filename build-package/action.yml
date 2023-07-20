@@ -1,4 +1,4 @@
-name: 'dd Build Package'
+name: 'Build Package'
 description: 'Build a linux package'
 author: 'dawsondellavalle'
 inputs:

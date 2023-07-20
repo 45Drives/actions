@@ -1,4 +1,4 @@
-name: 'dd Ansible Playbook'
+name: 'Ansible Playbook'
 description: 'Run an ansible playbook in GitHub Actions'
 author: 'dawsondellavalle'
 inputs:

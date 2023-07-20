@@ -1,4 +1,4 @@
-name: 'dd Get Manifest'
+name: 'Get Manifest'
 description: 'Get content of a 45Drives Build Manifest File'
 author: 'dawsondellavalle'
 inputs:

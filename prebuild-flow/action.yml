@@ -1,4 +1,4 @@
-name: 'dd Prebuild Package Flow'
+name: 'Prebuild Package Flow'
 description: 'Run the prebuild steps'
 inputs:
   directory:
