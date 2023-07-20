@@ -28,6 +28,8 @@ async function run(): Promise<void> {
 		const skipTags = core.getInput('skip_tags');
 		const tags = core.getInput('tags');
 
+		const extraVars = core.getInput('extra_vars');
+
 		const privateKey = core.getInput('private_key');
 		const privateKeyFile = core.getInput('private_key_file');
 
@@ -123,6 +125,10 @@ async function run(): Promise<void> {
 			}
 
 			cmd.push('--vault-password-file', vaultPasswordFile);
+		}
+
+		if (extraVars) {
+			cmd.push('--extra-vars', extraVars);
 		}
 
 		if (limit) {

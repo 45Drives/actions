@@ -12,6 +12,9 @@ inputs:
   directory:
     description: 'Working directory for the playbook'
     required: false
+  extra_vars:
+    description: 'Extra variables to pass to the playbook'
+    required: false
   user:
     description: 'User to run the playbook as'
     required: false

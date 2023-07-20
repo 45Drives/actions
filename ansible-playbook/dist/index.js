@@ -62,6 +62,7 @@ function run() {
             const startAtTask = core.getInput('start_task');
             const skipTags = core.getInput('skip_tags');
             const tags = core.getInput('tags');
+            const extraVars = core.getInput('extra_vars');
             const privateKey = core.getInput('private_key');
             const privateKeyFile = core.getInput('private_key_file');
             const inventory = core.getInput('inventory');
@@ -127,6 +128,9 @@ function run() {
                     throw new Error('The vault password file specified does not exist.');
                 }
                 cmd.push('--vault-password-file', vaultPasswordFile);
+            }
+            if (extraVars) {
+                cmd.push('--extra-vars', extraVars);
             }
             if (limit) {
                 cmd.push('--limit', limit);
