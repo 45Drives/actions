@@ -71,10 +71,10 @@ function run() {
             if (['rocky'].includes(build.group)) {
                 const cmd = [];
                 cmd.push('run', '-t', '--rm');
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/input/${buildId}/specs:/home/rpm/rpmbuild/SPECS`);
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/input/${buildId}/sources:/home/rpm/rpmbuild/SOURCES`);
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/output/${buildId}/rpms:/home/rpm/rpmbuild/RPMS`);
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/output/${buildId}/srpms:/home/rpm/rpmbuild/SRPMS`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/specs:/home/rpm/rpmbuild/SPECS`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/sources:/home/rpm/rpmbuild/SOURCES`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/rpms:/home/rpm/rpmbuild/RPMS`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/srpms:/home/rpm/rpmbuild/SRPMS`);
                 cmd.push('-e', 'NPM_TOKEN=?');
                 cmd.push('-e', `SPEC_NAME=${manifest.name}`);
                 cmd.push(build.image);
@@ -86,9 +86,9 @@ function run() {
             if (['debian', 'ubuntu'].includes(build.group)) {
                 const cmd = [];
                 cmd.push('run', '-t', '--rm');
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/input/${buildId}/source:/home/deb/build`);
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/input/${buildId}/debian:/home/deb/build/debian`);
-                cmd.push('-v', `/mnt/tank/ci_data/${uuid}/output/${buildId}/debs:/home/deb/debs`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/source:/home/deb/build`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/debian:/home/deb/build/debian`);
+                cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/debs:/home/deb/debs`);
                 cmd.push('-e', 'NPM_TOKEN=?');
                 cmd.push(build.image);
                 const exitCode = yield exec.exec('podman', cmd);
@@ -96,7 +96,7 @@ function run() {
                     throw new Error(`rocky build failed!`);
                 }
             }
-            fs_1.default.writeFileSync(path_1.default.join('/mnt/tank/ci_data', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
+            fs_1.default.writeFileSync(path_1.default.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
         }
         catch (error) {
             if (error instanceof Error)
