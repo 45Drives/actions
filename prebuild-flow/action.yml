@@ -27,6 +27,10 @@ runs:
       run: /root/git/auto-packaging/new-scripts/generate-ansible-vars ${{ inputs.directory }} ${{ steps.manifest.outputs.uuid }}
       shell: bash
 
+    - name: where are we
+      run: echo "${{ inputs.directory }} ${{ steps.manifest.outputs.uuid }}"
+      shell: bash
+
     - name: Run prebuild playbook
       uses: 45drives/actions/ansible-playbook@main
       with:
