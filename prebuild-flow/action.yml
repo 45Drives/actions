@@ -28,7 +28,7 @@ runs:
       shell: bash
 
     - name: where are we
-      run: echo "${{ inputs.directory }} ${{ steps.manifest.outputs.uuid }}"
+      run: echo "${{ inputs.directory }} ${{ steps.manifest.outputs.uuid }} ${{ fromJson(steps.manifest.outputs.json).stable }}"
       shell: bash
 
     - name: Run prebuild playbook
