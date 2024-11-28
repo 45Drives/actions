@@ -1,5 +1,9 @@
 name: 'Update Local Repository'
 description: 'Run tasks to update local repository'
+inputs:
+  directory:
+    description: 'The base directory of the project'
+    required: true
 runs:
   using: "composite"
   steps:
