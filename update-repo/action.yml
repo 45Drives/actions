@@ -1,0 +1,17 @@
+name: 'Update Local Repository'
+description: 'Run tasks to update local repository'
+runs:
+  using: "composite"
+  steps:
+    - id: add-pkg-to-repo
+      name: Add package to repository
+      uses: 45drives/actions/ansible-playbook@main
+      with:
+        playbook: /root/git/auto-packaging/actions/ansible/add-pkg-to-repo.yml
+        directory: ${{ inputs.directory }}/packaging
+        group_vars_directory: ${{ inputs.directory }}/packaging/group_vars
+        inventory: |
+          [ci]
+          localhost
+        become: true
+        host_key_checking: true
