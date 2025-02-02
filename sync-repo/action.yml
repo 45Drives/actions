@@ -1,0 +1,21 @@
+name: 'Sync Local Repository to Remote'
+description: 'Run tasks to sync local repo to remote'
+inputs:
+  directory:
+    description: 'The base directory of the project'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - id: sync-local-to-remote
+      name: Add package to repository
+      uses: 45drives/actions/ansible-playbook@main
+      with:
+        playbook: /root/git/auto-packaging/actions/ansible/sync-repo-to-remote.yml
+        directory: ${{ inputs.directory }}/packaging
+        group_vars_directory: ${{ inputs.directory }}/packaging/group_vars
+        inventory: |
+          [ci]
+          localhost
+        become: true
+        host_key_checking: true
