@@ -41,7 +41,7 @@ async function run(): Promise<void> {
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/rpms:/home/rpm/rpmbuild/RPMS`);
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/srpms:/home/rpm/rpmbuild/SRPMS`);
 
-			cmd.push('-e', `NPM_TOKEN=${fs.existsSync('/root/npm_token') ? fs.readFileSync('/root/npm_token') : 'NPM Location DNE'}`);
+			cmd.push('-e', `NPM_AUTH_TOKEN=${fs.existsSync('/root/npm_token') ? fs.readFileSync('/root/npm_token') : 'NPM Location DNE'}`);
 			cmd.push('-e', `SPEC_NAME=${manifest.name}`);
 
 			cmd.push(build.image);
