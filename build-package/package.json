@@ -1,5 +1,5 @@
 {
-  "name": "ansible-playbook-action",
+  "name": "build-package-action",
   "version": "0.0.0",
   "private": true,
   "description": "Ansible Playbook Executor Action",

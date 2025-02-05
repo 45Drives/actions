@@ -75,7 +75,7 @@ function run() {
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/sources:/home/rpm/rpmbuild/SOURCES`);
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/rpms:/home/rpm/rpmbuild/RPMS`);
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/srpms:/home/rpm/rpmbuild/SRPMS`);
-                cmd.push('-e', 'NPM_TOKEN=?');
+                cmd.push('-e', `NPM_TOKEN=${fs_1.default.existsSync('/root/npm_token') ? fs_1.default.readFileSync('/root/npm_token') : 'NPM Location DNE'}`);
                 cmd.push('-e', `SPEC_NAME=${manifest.name}`);
                 cmd.push(build.image);
                 const exitCode = yield exec.exec('podman', cmd);
