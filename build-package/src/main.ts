@@ -40,8 +40,8 @@ async function run(): Promise<void> {
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/sources:/home/rpm/rpmbuild/SOURCES`);
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/rpms:/home/rpm/rpmbuild/RPMS`);
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/srpms:/home/rpm/rpmbuild/SRPMS`);
-			fs.writeFileSync('/root/build_package_action.log', fs.readFileSync('/root/npm_token').toString());
-			cmd.push('-e', `NPM_AUTH_TOKEN=${fs.existsSync('/root/npm_token') ? fs.readFileSync('/root/npm_token').toString() : ''}`);
+
+			cmd.push('-e', `NPM_AUTH_TOKEN=${fs.existsSync('/root/npm_token') ? fs.readFileSync('/root/npm_token').toString().trim() : ''}`);
 			cmd.push('-e', `SPEC_NAME=${manifest.name}`);
 
 			cmd.push(build.image);
@@ -62,7 +62,7 @@ async function run(): Promise<void> {
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/debian:/home/deb/build/debian`);
 			cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/debs:/home/deb/debs`);
 
-			cmd.push('-e', 'NPM_TOKEN=?');
+			cmd.push('-e', `NPM_AUTH_TOKEN=${fs.existsSync('/root/npm_token') ? fs.readFileSync('/root/npm_token').toString().trim() : ''}`);
 
 			cmd.push(build.image);
 

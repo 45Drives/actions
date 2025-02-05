@@ -75,8 +75,7 @@ function run() {
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/sources:/home/rpm/rpmbuild/SOURCES`);
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/rpms:/home/rpm/rpmbuild/RPMS`);
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/srpms:/home/rpm/rpmbuild/SRPMS`);
-                fs_1.default.writeFileSync('/root/build_package_action.log', fs_1.default.readFileSync('/root/npm_token').toString());
-                cmd.push('-e', `NPM_AUTH_TOKEN=${fs_1.default.existsSync('/root/npm_token') ? fs_1.default.readFileSync('/root/npm_token').toString() : ''}`);
+                cmd.push('-e', `NPM_AUTH_TOKEN=${fs_1.default.existsSync('/root/npm_token') ? fs_1.default.readFileSync('/root/npm_token').toString().trim() : ''}`);
                 cmd.push('-e', `SPEC_NAME=${manifest.name}`);
                 cmd.push(build.image);
                 const exitCode = yield exec.exec('podman', cmd);
@@ -90,7 +89,7 @@ function run() {
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/source:/home/deb/build`);
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/input/${buildId}/debian:/home/deb/build/debian`);
                 cmd.push('-v', `/mnt/ci_artifacts/${uuid}/output/${buildId}/debs:/home/deb/debs`);
-                cmd.push('-e', 'NPM_TOKEN=?');
+                cmd.push('-e', `NPM_AUTH_TOKEN=${fs_1.default.existsSync('/root/npm_token') ? fs_1.default.readFileSync('/root/npm_token').toString().trim() : ''}`);
                 cmd.push(build.image);
                 const exitCode = yield exec.exec('podman', cmd);
                 if (exitCode !== 0) {
