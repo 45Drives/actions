@@ -1,10 +1,8 @@
-** Making Chnages to Actions **
+## Making Changes to Actions
 
 Unless action is written in typescript, simply update the source code and commit & push
 
 If typescript
-
-*** Typescript ***
 
 After changing source code, recompile package before pushing changes
 
