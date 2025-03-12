@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 
 import fs from 'fs';
+import fsp from 'fs/promises';
 import path from 'path';
 
 // import { tmpFile } from './tmp';
@@ -73,7 +74,8 @@ async function run(): Promise<void> {
 			}
 		}
 
-		fs.writeFileSync(path.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
+		core.info(build);
+		await fsp.writeFile(path.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
 	} catch (error) {
 		if (error instanceof Error) core.setFailed(error.message);
 	} finally {

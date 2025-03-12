@@ -45,6 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const exec = __importStar(__nccwpck_require__(514));
 const fs_1 = __importDefault(__nccwpck_require__(147));
+const promises_1 = __importDefault(__nccwpck_require__(292));
 const path_1 = __importDefault(__nccwpck_require__(17));
 // import { tmpFile } from './tmp';
 // import path from 'path';
@@ -96,7 +97,8 @@ function run() {
                     throw new Error(`rocky build failed!`);
                 }
             }
-            fs_1.default.writeFileSync(path_1.default.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
+            core.info(build);
+            yield promises_1.default.writeFile(path_1.default.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
         }
         catch (error) {
             if (error instanceof Error)
@@ -4084,6 +4086,14 @@ module.exports = require("events");
 
 "use strict";
 module.exports = require("fs");
+
+/***/ }),
+
+/***/ 292:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs/promises");
 
 /***/ }),
 
