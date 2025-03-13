@@ -4,8 +4,15 @@ import * as exec from '@actions/exec';
 import fs from 'fs';
 import fsp from 'fs/promises';
 
+import crypto from 'crypto';
+
 import { tmpFile } from './tmp';
 import path from 'path';
+
+const generateRandomString = (length = 8): string => {
+	const bytes = crypto.randomBytes(Math.ceil(length / 2));
+	return bytes.toString('hex').slice(0, length);
+};
 
 async function run(): Promise<void> {
 	const tmpFiles = [];
@@ -75,7 +82,7 @@ async function run(): Promise<void> {
 		}
 
 		if (inventory) {
-			const tmpInventoryPath = !directory ? tmpFile('_ansible_hosts') : path.join(directory, '_ansible_hosts');
+			const tmpInventoryPath = !directory ? tmpFile(`_ansible_hosts.${generateRandomString()}`) : path.join(directory, `_ansible_hosts.${generateRandomString()}`);
 
 			core.info(tmpInventoryPath);
 
@@ -95,7 +102,7 @@ async function run(): Promise<void> {
 		}
 
 		if (privateKey) {
-			const tmpPrivateKeyPath = tmpFile('_ansible_ssh_private_key');
+			const tmpPrivateKeyPath = tmpFile(`_ansible_ssh_private_key.${generateRandomString()}`);
 
 			fs.writeFileSync(tmpPrivateKeyPath, privateKey);
 
@@ -113,7 +120,7 @@ async function run(): Promise<void> {
 		}
 
 		if (vaultPassword) {
-			const tmpVaultPasswordPath = tmpFile('_ansible_vault_password');
+			const tmpVaultPasswordPath = tmpFile(`_ansible_vault_password.${generateRandomString()}`);
 
 			fs.writeFileSync(tmpVaultPasswordPath, vaultPassword);
 
@@ -155,7 +162,7 @@ async function run(): Promise<void> {
 		}
 
 		if (connectionPassword) {
-			const tmpConnectionPasswordPath = tmpFile('_ansible_connection_password');
+			const tmpConnectionPasswordPath = tmpFile(`_ansible_connection_password.${generateRandomString()}`);
 
 			fs.writeFileSync(tmpConnectionPasswordPath, vaultPassword);
 
@@ -173,7 +180,7 @@ async function run(): Promise<void> {
 		}
 
 		if (becomePassword) {
-			const tmpBecomePasswordPath = tmpFile('_ansible_become_password');
+			const tmpBecomePasswordPath = tmpFile(`_ansible_become_password.${generateRandomString()}`);
 
 			fs.writeFileSync(tmpBecomePasswordPath, vaultPassword);
 
@@ -199,7 +206,7 @@ async function run(): Promise<void> {
 		}
 
 		if (knownHosts) {
-			const tmpKnownHostsPath = tmpFile('_ansible_known_hosts');
+			const tmpKnownHostsPath = tmpFile(`_ansible_known_hosts.${generateRandomString()}`);
 
 			fs.writeFileSync(tmpKnownHostsPath, knownHosts);
 

@@ -46,8 +46,13 @@ const core = __importStar(__nccwpck_require__(186));
 const exec = __importStar(__nccwpck_require__(514));
 const fs_1 = __importDefault(__nccwpck_require__(147));
 const promises_1 = __importDefault(__nccwpck_require__(292));
+const crypto_1 = __importDefault(__nccwpck_require__(113));
 const tmp_1 = __nccwpck_require__(870);
 const path_1 = __importDefault(__nccwpck_require__(17));
+const generateRandomString = (length = 8) => {
+    const bytes = crypto_1.default.randomBytes(Math.ceil(length / 2));
+    return bytes.toString('hex').slice(0, length);
+};
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const tmpFiles = [];
@@ -95,7 +100,7 @@ function run() {
                 }
             }
             if (inventory) {
-                const tmpInventoryPath = !directory ? (0, tmp_1.tmpFile)('_ansible_hosts') : path_1.default.join(directory, '_ansible_hosts');
+                const tmpInventoryPath = !directory ? (0, tmp_1.tmpFile)(`_ansible_hosts.${generateRandomString()}`) : path_1.default.join(directory, `_ansible_hosts.${generateRandomString()}`);
                 core.info(tmpInventoryPath);
                 yield promises_1.default.writeFile(tmpInventoryPath, inventory);
                 cmd.push('--inventory-file', tmpInventoryPath);
@@ -108,7 +113,7 @@ function run() {
                 cmd.push('--inventory-file', inventoryFile);
             }
             if (privateKey) {
-                const tmpPrivateKeyPath = (0, tmp_1.tmpFile)('_ansible_ssh_private_key');
+                const tmpPrivateKeyPath = (0, tmp_1.tmpFile)(`_ansible_ssh_private_key.${generateRandomString()}`);
                 fs_1.default.writeFileSync(tmpPrivateKeyPath, privateKey);
                 cmd.push('--private-key', tmpPrivateKeyPath);
                 tmpFiles.push(tmpPrivateKeyPath);
@@ -120,7 +125,7 @@ function run() {
                 cmd.push('--private-key', privateKeyFile);
             }
             if (vaultPassword) {
-                const tmpVaultPasswordPath = (0, tmp_1.tmpFile)('_ansible_vault_password');
+                const tmpVaultPasswordPath = (0, tmp_1.tmpFile)(`_ansible_vault_password.${generateRandomString()}`);
                 fs_1.default.writeFileSync(tmpVaultPasswordPath, vaultPassword);
                 cmd.push('--vault-password-file', tmpVaultPasswordPath);
                 tmpFiles.push(tmpVaultPasswordPath);
@@ -150,7 +155,7 @@ function run() {
                 cmd.push('--user', user);
             }
             if (connectionPassword) {
-                const tmpConnectionPasswordPath = (0, tmp_1.tmpFile)('_ansible_connection_password');
+                const tmpConnectionPasswordPath = (0, tmp_1.tmpFile)(`_ansible_connection_password.${generateRandomString()}`);
                 fs_1.default.writeFileSync(tmpConnectionPasswordPath, vaultPassword);
                 cmd.push('--connection-password-file', tmpConnectionPasswordPath);
                 tmpFiles.push(tmpConnectionPasswordPath);
@@ -162,7 +167,7 @@ function run() {
                 cmd.push('--connection-password-file', connectionPasswordFile);
             }
             if (becomePassword) {
-                const tmpBecomePasswordPath = (0, tmp_1.tmpFile)('_ansible_become_password');
+                const tmpBecomePasswordPath = (0, tmp_1.tmpFile)(`_ansible_become_password.${generateRandomString()}`);
                 fs_1.default.writeFileSync(tmpBecomePasswordPath, vaultPassword);
                 cmd.push('--become-password-file', tmpBecomePasswordPath);
                 tmpFiles.push(tmpBecomePasswordPath);
@@ -180,7 +185,7 @@ function run() {
                 cmd.push('--become-user', becomeUser);
             }
             if (knownHosts) {
-                const tmpKnownHostsPath = (0, tmp_1.tmpFile)('_ansible_known_hosts');
+                const tmpKnownHostsPath = (0, tmp_1.tmpFile)(`_ansible_known_hosts.${generateRandomString()}`);
                 fs_1.default.writeFileSync(tmpKnownHostsPath, knownHosts);
                 sshCommonArgs.push('-o', `UserKnownHostsFile=${tmpKnownHostsPath}`);
                 tmpFiles.push(tmpKnownHostsPath);
