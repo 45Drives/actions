@@ -48,7 +48,6 @@ const fs_1 = __importDefault(__nccwpck_require__(147));
 const promises_1 = __importDefault(__nccwpck_require__(292));
 const crypto_1 = __importDefault(__nccwpck_require__(113));
 const tmp_1 = __nccwpck_require__(870);
-const path_1 = __importDefault(__nccwpck_require__(17));
 const generateRandomString = (length = 8) => {
     const bytes = crypto_1.default.randomBytes(Math.ceil(length / 2));
     return bytes.toString('hex').slice(0, length);
@@ -100,7 +99,8 @@ function run() {
                 }
             }
             if (inventory) {
-                const tmpInventoryPath = !directory ? (0, tmp_1.tmpFile)(`_ansible_hosts.${generateRandomString()}`) : path_1.default.join(directory, `_ansible_hosts.${generateRandomString()}`);
+                // const tmpInventoryPath = !directory ? tmpFile(`_ansible_hosts.${generateRandomString()}`) : path.join(directory, `_ansible_hosts.${generateRandomString()}`);
+                const tmpInventoryPath = (0, tmp_1.tmpFile)(`_ansible_hosts.${generateRandomString()}`);
                 core.info(tmpInventoryPath);
                 yield promises_1.default.writeFile(tmpInventoryPath, inventory);
                 cmd.push('--inventory-file', tmpInventoryPath);
