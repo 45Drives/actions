@@ -89,6 +89,8 @@ async function run(): Promise<void> {
 
 			await fsp.writeFile(tmpInventoryPath, inventory);
 
+			if (!fs.existsSync(tmpInventoryPath)) throw new Error('failed to write inventory file');
+
 			cmd.push('--inventory-file', tmpInventoryPath);
 
 			tmpFiles.push(tmpInventoryPath);

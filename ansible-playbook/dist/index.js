@@ -104,6 +104,8 @@ function run() {
                 // const tmpInventoryPath = tmpFile(`_ansible_hosts.${generateRandomString()}`);
                 core.info(tmpInventoryPath);
                 yield promises_1.default.writeFile(tmpInventoryPath, inventory);
+                if (!fs_1.default.existsSync(tmpInventoryPath))
+                    throw new Error('failed to write inventory file');
                 cmd.push('--inventory-file', tmpInventoryPath);
                 tmpFiles.push(tmpInventoryPath);
             }
