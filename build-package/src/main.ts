@@ -74,6 +74,7 @@ async function run(): Promise<void> {
 			}
 		}
 
+		core.info(path.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'));
 		core.info(JSON.stringify(build));
 		await fsp.writeFile(path.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
 	} catch (error) {

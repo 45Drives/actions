@@ -97,6 +97,7 @@ function run() {
                     throw new Error(`rocky build failed!`);
                 }
             }
+            core.info(path_1.default.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'));
             core.info(JSON.stringify(build));
             yield promises_1.default.writeFile(path_1.default.join('/mnt/ci_artifacts', uuid, 'output', buildId, 'build_info.json'), JSON.stringify(build));
         }
