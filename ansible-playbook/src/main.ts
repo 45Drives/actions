@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 
 import fs from 'fs';
+import fsp from 'fs/promises';
 
 import { tmpFile } from './tmp';
 import path from 'path';
@@ -76,7 +77,9 @@ async function run(): Promise<void> {
 		if (inventory) {
 			const tmpInventoryPath = !directory ? tmpFile('_ansible_hosts') : path.join(directory, '_ansible_hosts');
 
-			fs.writeFileSync(tmpInventoryPath, inventory);
+			core.info(tmpInventoryPath);
+
+			await fsp.writeFile(tmpInventoryPath, inventory);
 
 			cmd.push('--inventory-file', tmpInventoryPath);
 

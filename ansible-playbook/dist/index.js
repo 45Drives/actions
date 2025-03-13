@@ -45,6 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const exec = __importStar(__nccwpck_require__(514));
 const fs_1 = __importDefault(__nccwpck_require__(147));
+const promises_1 = __importDefault(__nccwpck_require__(292));
 const tmp_1 = __nccwpck_require__(870);
 const path_1 = __importDefault(__nccwpck_require__(17));
 function run() {
@@ -95,7 +96,8 @@ function run() {
             }
             if (inventory) {
                 const tmpInventoryPath = !directory ? (0, tmp_1.tmpFile)('_ansible_hosts') : path_1.default.join(directory, '_ansible_hosts');
-                fs_1.default.writeFileSync(tmpInventoryPath, inventory);
+                core.info(tmpInventoryPath);
+                yield promises_1.default.writeFile(tmpInventoryPath, inventory);
                 cmd.push('--inventory-file', tmpInventoryPath);
                 tmpFiles.push(tmpInventoryPath);
             }
@@ -4241,6 +4243,14 @@ module.exports = require("events");
 
 "use strict";
 module.exports = require("fs");
+
+/***/ }),
+
+/***/ 292:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs/promises");
 
 /***/ }),
 
