@@ -7,6 +7,7 @@ import fsp from 'fs/promises';
 import crypto from 'crypto';
 
 import { tmpFile } from './tmp';
+import path from 'path';
 
 const generateRandomString = (length = 8): string => {
 	const bytes = crypto.randomBytes(Math.ceil(length / 2));
@@ -81,8 +82,8 @@ async function run(): Promise<void> {
 		}
 
 		if (inventory) {
-			// const tmpInventoryPath = !directory ? tmpFile(`_ansible_hosts.${generateRandomString()}`) : path.join(directory, `_ansible_hosts.${generateRandomString()}`);
-			const tmpInventoryPath = tmpFile(`_ansible_hosts.${generateRandomString()}`);
+			const tmpInventoryPath = !directory ? tmpFile(`_ansible_hosts.${generateRandomString()}`) : path.join(directory, `_ansible_hosts.${generateRandomString()}`);
+			// const tmpInventoryPath = tmpFile(`_ansible_hosts.${generateRandomString()}`);
 
 			core.info(tmpInventoryPath);
 
