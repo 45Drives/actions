@@ -17,6 +17,18 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # required to fetch main
+    - id: check_merged_main
+      name: Check if tag is merged into main
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        if ! git merge-base --is-ancestor ${{ github.ref }} origin/HEAD; then
+          echo "This tag is not merged into $(git rev-parse --abbrev-ref origin/HEAD). Aborting build."
+          exit 1
+        fi
+      shell: bash
     - id: manifest
       name: Get manifest json
       uses: 45drives/actions/get-manifest@main
